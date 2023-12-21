@@ -1,0 +1,59 @@
+---
+
+---
+
+<label
+	for="import-json-cards"
+	class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-200 bg-slate-800 hover:bg-slate-700"
+>
+	<input
+		type="file"
+		name="import-json-cards"
+		id="import-json-cards"
+		class="hidden"
+		accept=".json"
+	/>
+	 Import
+</label>
+
+<script>
+	const fileInput = document.getElementById("import-json-cards");
+
+	function handleFileInput(event) {
+		if (fileInput.files.length > 0) {
+			const file = fileInput.files[0];
+
+			// Validate file type just in case (allow only JSON files)
+			if (
+				file.type === "application/json" &&
+				file.name.endsWith(".json")
+			) {
+				const reader = new FileReader();
+
+				reader.onload = (e) => {
+					try {
+						// Parse the JSON data
+						const jsonData = JSON.parse(e.target.result);
+
+						// Store the JSON data in localStorage
+						localStorage.setItem("cards", JSON.stringify(jsonData));
+
+						// Log
+						console.log("Data stored in localStorage.");
+					} catch (error) {
+						console.error("Error parsing JSON:", error);
+					}
+				};
+
+				// Read the file as text
+				reader.readAsText(file);
+			} else {
+				console.error("Invalid file type. Please select a JSON file.");
+			}
+		} else {
+			console.error("No file selected.");
+		}
+	}
+
+	fileInput.addEventListener("change", handleFileInput);
+</script>

@@ -1,0 +1,43 @@
+---
+
+---
+
+<button
+	id="export-json-cards"
+	class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-200 bg-slate-800 hover:bg-slate-700"
+>
+	Export
+</button>
+
+<script>
+	const exportBtn = document.getElementById("export-json-cards");
+
+	function exportData() {
+		const jsonData = localStorage.getItem("cards");
+
+		if (jsonData) {
+			// Create blob
+			const blob = new Blob([jsonData], { type: "application/json" });
+			const url = URL.createObjectURL(blob);
+
+			// Create a link element
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = "exported_flashcards.json";
+
+			// Append the link to the document and trigger the click event
+			document.body.appendChild(a);
+			a.click();
+
+			// Remove the link element
+			document.body.removeChild(a);
+
+			// Revoke the Blob URL to free up resources
+			URL.revokeObjectURL(url);
+		} else {
+			console.error("No data to export.");
+		}
+	}
+
+	exportBtn.addEventListener("click", exportData);
+</script>

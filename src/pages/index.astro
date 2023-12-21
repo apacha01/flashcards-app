@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Code from "../components/Code.astro";
 import InlineCode from "../components/InlineCode.astro";
+import IOMenu from "../components/IOMenu.astro";
 
 const cardsJsonFormat = `[
 	{
@@ -56,5 +57,6 @@ const cardsJsonFormat = `[
 			The imported JSON will be saved in the localstorage and you can
 			export all cards whenever you want with the menu on the right side.
 		</p>
+		<IOMenu />
 	</main>
 </Layout>
