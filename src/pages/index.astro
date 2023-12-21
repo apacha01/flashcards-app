@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Code from "../components/Code.astro";
+
+const codeString = `void main () {
+	// doing somehting
+	...
+}`;
+---
+
+<Layout title="Flashcards">
+	<h1 class="text-4xl font-bold">Welcome</h1>
+	<Code language="c">{codeString}</Code>
+</Layout>
