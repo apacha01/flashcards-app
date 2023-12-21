@@ -6,4 +6,4 @@ interface Props {
 const { language = "c" } = Astro.props;
 ---
 
-<pre><code class=`language-${language.toLowerCase()}`><slot /></code></pre>
+<pre class="max-w-prose"><code class=`language-${language.toLowerCase()}`><slot /></code></pre>
