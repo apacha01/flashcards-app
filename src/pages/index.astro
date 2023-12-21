@@ -14,44 +14,47 @@ const cardsJsonFormat = `[
 ---
 
 <Layout title="Flashcards">
-	<h1 class="text-4xl font-bold my-3 text-slate-200">Flashcards App</h1>
-	<p class="text-2xl my-3 text-slate-50">
-		To use this app you should import your cards from a JSON document. If
-		you don't have your cards in JSON format the use the following format to
-		pass them to a JSON document:
-	</p>
-	<Code language="json">{cardsJsonFormat}</Code>
-	<ul class="max-w-prose px-6 text-balance list-disc pl-10">
-		<li>
-			<p class="text-lg text-slate-50 my-2">
-				If type is <InlineCode>text</InlineCode>, it will simply show
-				the information.
-			</p>
-		</li>
-		<li>
-			<p class="text-lg text-slate-50 my-2">
-				If type is <InlineCode>code</InlineCode>, it will use prism to
-				show the code. The app will look for the ':' separation and
-				select the language, if not specified it will default to C.
-				However <strong>
-					other languages beside C or JSON are not yet supported
-				</strong>, since i couldn't make the prism autoloader work and i
-				wanted to finish this fast.
-			</p>
-		</li>
-		<li>
-			<p class="text-lg text-slate-50 my-2">
-				If type is <InlineCode>image</InlineCode>, it will check whether
-				it's base64 encoded and set the
-				<InlineCode>
-					{`<img />`}
-				</InlineCode>
-				 HTML element <InlineCode>src</InlineCode> property accordingly.
-			</p>
-		</li>
-	</ul>
-	<p class="text-2xl my-3 text-slate-50">
-		The imported JSON will be saved in the localstorage and you can export
-		all cards whenever you want with the menu on the right side.
-	</p>
+	<main class="w-full px-6 flex flex-col items-center">
+		<h1 class="text-4xl font-bold my-3 text-slate-200">Flashcards App</h1>
+		<p class="text-2xl my-3 text-slate-50">
+			To use this app you should import your cards from a JSON document.
+			If you don't have your cards in JSON format the use the following
+			format to pass them to a JSON document:
+		</p>
+		<Code language="json">{cardsJsonFormat}</Code>
+		<ul class="max-w-prose px-6 text-balance list-disc pl-10">
+			<li>
+				<p class="text-lg text-slate-50 my-2">
+					If type is <InlineCode>text</InlineCode>, it will simply
+					show the information.
+				</p>
+			</li>
+			<li>
+				<p class="text-lg text-slate-50 my-2">
+					If type is <InlineCode>code</InlineCode>, it will use prism
+					to show the code. The app will look for the ':' separation
+					and select the language, if not specified it will default to
+					C. However <strong>
+						other languages beside C or JSON are not yet supported
+					</strong>, since i couldn't make the prism autoloader work
+					and i wanted to finish this fast.
+				</p>
+			</li>
+			<li>
+				<p class="text-lg text-slate-50 my-2">
+					If type is <InlineCode>image</InlineCode>, it will check
+					whether it's base64 encoded and set the
+					<InlineCode>
+						{`<img />`}
+					</InlineCode>
+					 HTML element <InlineCode>src</InlineCode> property
+					accordingly.
+				</p>
+			</li>
+		</ul>
+		<p class="text-2xl my-3 text-slate-50">
+			The imported JSON will be saved in the localstorage and you can
+			export all cards whenever you want with the menu on the right side.
+		</p>
+	</main>
 </Layout>
