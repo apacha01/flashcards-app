@@ -1,0 +1,70 @@
+---
+import IOMenu from "../components/IOMenu.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="CRUD Flashcards">
+	<main class="w-full px-6 flex flex-col items-center">
+		<h1 class="text-4xl font-bold my-4 text-slate-200">
+			Create a new card here
+		</h1>
+		<textarea
+			name="card"
+			id="card"
+			placeholder="Card JSON here..."
+			class="p-4 w-full min-h-64 my-8"></textarea>
+		<button
+			id="create-card"
+			class="mb-24 rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-200 bg-slate-800 hover:bg-slate-700"
+		>
+			Create
+		</button>
+		<section id="cards-container"></section>
+		<IOMenu />
+	</main>
+</Layout>
+
+<script>
+	// SHOW CARDS
+	const cardsContainer = document.getElementById("cards-container");
+
+	function showCards() {
+		let cards = [];
+
+		try {
+			// If null (not there), set to empty array
+			cards = JSON.parse(localStorage.getItem("cards")) ?? [];
+		} catch {
+			cards = [];
+		}
+
+		// TODO
+		// Until flashcard component created, just show it as text.
+		cardsContainer.innerText = JSON.stringify(cards);
+	}
+
+	showCards();
+
+	// CREATE CARD
+	const createCardBtn = document.getElementById("create-card");
+
+	function addCardToList() {
+		const cardText = document.getElementById("card");
+		let cards = [];
+
+		try {
+			// If null (not there), set to empty array
+			cards = JSON.parse(localStorage.getItem("cards")) ?? [];
+		} catch {
+			cards = [];
+		}
+
+		if (cardText.value && cardText.value.localeCompare("") !== 0)
+			cards.push(cardText.value);
+
+		localStorage.setItem("cards", JSON.stringify(cards));
+		showCards();
+	}
+
+	createCardBtn.addEventListener("click", addCardToList);
+</script>
