@@ -1,8 +1,10 @@
 import { useEffect } from "preact/hooks";
 
-export default function Flashcard({ front, back, type, flipped = false }) {
+export default function Card({ front, back, type, flipped = false }) {
 
 	useEffect(() => {
+		// TODO
+		// Find out how to know if child component rendered and highligh only once in parent element. Maybe ref?
 		if (type.localeCompare('code') === 0)
 			Prism.highlightAll();
 	}, [])
@@ -22,33 +24,33 @@ export default function Flashcard({ front, back, type, flipped = false }) {
 					</p>
 				</div>
 				<div
-					class="text-black absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-400 text-center rounded-xl p-2"
+					class="text-black absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-400 rounded-xl p-2"
 					style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden", transform: "rotateX(180deg)" }}
 				>
 					{
 						// If text use <p> tag
-						type.localeCompare('text') === 0
+						'text'.localeCompare(type) === 0
 							? (
-								<p class="max-w-prose text-2xl [transform:translateZ(100px)]">
+								<p class="max-h-full overflow-y-auto max-w-prose text-2xl px-10">
 									{back}
 								</p>
 							)
 							// If image
-							: type.localeCompare('image') === 0
+							: 'image'.localeCompare(type) === 0
 								// check if base64 encoded to add the prefix
 								? (
 									<img
-										class="max-h-full"
+										class="max-h-full max-w-full"
 										src={`${/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/.test(back) ? 'data:image/png;base64,' : ''}${back}`}
 										alt="Back of the card"
 									/>
 								)
 								// If code
-								: type.localeCompare('code') === 0
+								: 'code'.localeCompare(type) === 0
 									// TODO	
 									// Add other languages, uses C only
 									? (
-										<div class="[transform:translateZ(100px)]">
+										<div class={`max-h-full overflow-y-auto`}>
 											<pre><code class="language-c">{back}</code></pre>
 										</div>
 									)
