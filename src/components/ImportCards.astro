@@ -17,9 +17,11 @@
 </label>
 
 <script>
+	import { setAndShowDialog } from "../stores/dialogStore";
+
 	const fileInput = document.getElementById("import-json-cards");
 
-	function handleFileInput(event) {
+	function handleFileInput() {
 		if (fileInput.files.length > 0) {
 			const file = fileInput.files[0];
 
@@ -41,6 +43,11 @@
 						// Log
 						console.log("Data stored in localStorage.");
 					} catch (error) {
+						setAndShowDialog(
+							"Error parsing JSON.",
+							"Check if syntax is correct.",
+							true,
+						);
 						console.error("Error parsing JSON:", error);
 					}
 				};
@@ -48,9 +55,19 @@
 				// Read the file as text
 				reader.readAsText(file);
 			} else {
+				setAndShowDialog(
+					"Invalid file type.",
+					"Please select a JSON file.",
+					true,
+				);
 				console.error("Invalid file type. Please select a JSON file.");
 			}
 		} else {
+			setAndShowDialog(
+				"No file selected.",
+				"Please select a JSON file.",
+				true,
+			);
 			console.error("No file selected.");
 		}
 	}

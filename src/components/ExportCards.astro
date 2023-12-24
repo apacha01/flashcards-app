@@ -10,14 +10,16 @@
 </button>
 
 <script>
+	import { setAndShowDialog } from "../stores/dialogStore.js";
+
 	const exportBtn = document.getElementById("export-json-cards");
 
 	function exportData() {
-		const jsonData = localStorage.getItem("cards");
+		const cards = localStorage.getItem("cards");
 
-		if (jsonData) {
+		if (cards) {
 			// Create blob
-			const blob = new Blob([jsonData], { type: "application/json" });
+			const blob = new Blob([cards], { type: "application/json" });
 			const url = URL.createObjectURL(blob);
 
 			// Create a link element
@@ -35,6 +37,11 @@
 			// Revoke the Blob URL to free up resources
 			URL.revokeObjectURL(url);
 		} else {
+			setAndShowDialog(
+				"No data to export",
+				"Local storage is empty.",
+				true,
+			);
 			console.error("No data to export.");
 		}
 	}
