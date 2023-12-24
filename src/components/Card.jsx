@@ -5,7 +5,7 @@ export default function Card({ front, back, type, flipped = false }) {
 	useEffect(() => {
 		// TODO
 		// Find out how to know if child component rendered and highligh only once in parent element. Maybe ref?
-		if (type.localeCompare('code') === 0)
+		if ('code'.localeCompare(type) === 0)
 			Prism.highlightAll();
 	}, [])
 
@@ -46,9 +46,10 @@ export default function Card({ front, back, type, flipped = false }) {
 									/>
 								)
 								// If code
-								: 'code'.localeCompare(type) === 0
+								: 'code'.localeCompare(type.split(':')[0]) === 0
 									// TODO	
 									// Add other languages, uses C only
+									// type.split(':')[1]
 									? (
 										<div class={`max-h-full overflow-y-auto`}>
 											<pre><code class="language-c">{back}</code></pre>
