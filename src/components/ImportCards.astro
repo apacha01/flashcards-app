@@ -41,6 +41,11 @@
 						localStorage.setItem("cards", JSON.stringify(jsonData));
 
 						// Log
+						setAndShowDialog(
+							"Data stored in localStorage.",
+							"You can now use this cards to study.",
+							false,
+						);
 						console.log("Data stored in localStorage.");
 					} catch (error) {
 						setAndShowDialog(
