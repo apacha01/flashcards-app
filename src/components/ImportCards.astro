@@ -18,6 +18,7 @@
 
 <script>
 	import { setAndShowDialog } from "../stores/dialogStore";
+	import { setCards } from "../stores/cardsListStore";
 
 	const fileInput = document.getElementById("import-json-cards");
 
@@ -37,8 +38,8 @@
 						// Parse the JSON data
 						const jsonData = JSON.parse(e.target.result);
 
-						// Store the JSON data in localStorage
-						localStorage.setItem("cards", JSON.stringify(jsonData));
+						// Store the JSON data
+						setCards(jsonData);
 
 						// Log
 						setAndShowDialog(
@@ -46,7 +47,6 @@
 							"You can now use this cards to study.",
 							false,
 						);
-						console.log("Data stored in localStorage.");
 					} catch (error) {
 						setAndShowDialog(
 							"Error parsing JSON.",

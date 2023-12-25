@@ -1,6 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FlashcardsList from "../components/FlashcardsList.jsx";
+
+const jsonStructure = `{
+	"front": "",
+	"back": "",
+	"type": "text | image | code"
+}`;
 ---
 
 <Layout title="Flashcards">
@@ -19,13 +25,13 @@ import FlashcardsList from "../components/FlashcardsList.jsx";
 				</h2>
 				<p class="text-xl text-slate-200">
 					Put quotes on the properties and don't forget the comma (as
-					shown in home page).
+					shown in placeholder).
 				</p>
 			</header>
 			<textarea
 				name="card"
 				id="card"
-				placeholder="Card JSON here..."
+				placeholder={jsonStructure}
 				class="p-4 w-4/5 min-h-64 my-8"></textarea>
 			<button
 				id="create-card"
@@ -51,27 +57,35 @@ import FlashcardsList from "../components/FlashcardsList.jsx";
 </Layout>
 
 <script>
+	import { addCardToList } from "../stores/cardsListStore.js";
+	import { setAndShowDialog } from "../stores/dialogStore";
+
 	// CREATE CARD
 	const createCardBtn = document.getElementById("create-card");
 
-	function addCardToList() {
+	function createAndAddCardToList() {
 		const cardText = document.getElementById("card") as HTMLInputElement;
-		let cards = [];
 
 		try {
-			// If null (not there), set to empty array
-			cards = JSON.parse(localStorage.getItem("cards")) ?? [];
 			// TODO
 			// add json schema validation
-			if (cardText.value && cardText.value.localeCompare("") !== 0)
-				cards.push(JSON.parse(cardText.value));
+			if (cardText.value && cardText.value.localeCompare("") !== 0) {
+				addCardToList(JSON.parse(cardText.value));
+				setAndShowDialog(
+					"Card added to the list",
+					"You can now see it in the list below.",
+					false,
+				);
+			}
 		} catch (e) {
-			cards = [];
+			setAndShowDialog(
+				"Error creating card",
+				"Check if syntax is correct.",
+				true,
+			);
 			console.error(e);
 		}
-
-		localStorage.setItem("cards", JSON.stringify(cards));
 	}
 
-	createCardBtn.addEventListener("click", addCardToList);
+	createCardBtn.addEventListener("click", createAndAddCardToList);
 </script>

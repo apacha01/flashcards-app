@@ -1,31 +1,15 @@
-import { useEffect, useState } from "preact/hooks";
 import Flashcard from "./Flashcard.jsx";
+import { useStore } from "@nanostores/preact";
+import { cards } from "../stores/cardsListStore.js";
 
 export default function FlashcardsList({ piledUp = false }) {
-	const [list, setList] = useState([]);
-
-	useEffect(() => {
-		const handleStorageChange = () => {
-			setList(JSON.parse(localStorage.getItem('cards')) ?? []);
-		};
-
-		// Add the event listener for the storage change
-		window.addEventListener('storage', handleStorageChange);
-
-		// Initial fetch of data from localStorage
-		handleStorageChange();
-
-		// Cleanup the event listener on component unmount
-		return () => {
-			window.removeEventListener('storage', handleStorageChange);
-		};
-	}, []);
+	const list = useStore(cards);
 
 	return (
-		<ul class="w-full">
+		<ul class="relative w-full">
 			{
 				list.map((c, i) =>
-					<li class="w-full" style={{ zIndex: i }}>
+					<li class={`w-full ${piledUp ? 'absolute' : ''}`} style={{ zIndex: list.length - i }}>
 						<Flashcard front={c.front} back={c.back} type={c.type} />
 					</li>
 				)
