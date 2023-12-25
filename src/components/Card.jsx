@@ -10,13 +10,13 @@ export default function Card({ front, back, type, flipped = false }) {
 	}, [])
 
 	return (
-		<article class="grid my-6 w-4/5 min-w-[300px] min-h-[30rem] h-fit bg-transparent" style={{ perspective: "1000px" }}>
+		<article class="grid text-slate-100 my-6 w-4/5 min-w-[300px] min-h-[30rem] h-fit bg-transparent" style={{ perspective: "1000px" }}>
 			<div
-				class={`w-full h-full relative transition-transform duration-[375ms] ${flipped ? '[transform:rotateX(180deg)]' : ''}`}
+				class={`w-full h-full border border-slate-50 rounded-xl shadow-lg shadow-black transition-transform duration-[375ms] ${flipped ? '[transform:rotateX(180deg)]' : ''}`}
 				style={{ transformStyle: "preserve-3d" }} // TODO or [transform-style:preserve-3d] in class so it's not inline ?
 			>
 				<div
-					class="text-black absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-400 text-center rounded-xl p-2"
+					class="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-800 text-center rounded-xl p-2"
 					style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
 				>
 					<p class="text-4xl [transform:translateZ(100px)]">
@@ -24,7 +24,7 @@ export default function Card({ front, back, type, flipped = false }) {
 					</p>
 				</div>
 				<div
-					class="text-black absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-400 rounded-xl p-2"
+					class="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-700 rounded-xl p-2"
 					style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden", transform: "rotateX(180deg)" }}
 				>
 					{
