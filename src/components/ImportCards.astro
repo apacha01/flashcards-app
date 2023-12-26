@@ -54,6 +54,8 @@
 							true,
 						);
 						console.error("Error parsing JSON:", error);
+					} finally {
+						fileInput.value = null;
 					}
 				};
 
