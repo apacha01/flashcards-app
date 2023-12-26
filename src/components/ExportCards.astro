@@ -15,11 +15,13 @@
 	const exportBtn = document.getElementById("export-json-cards");
 
 	function exportData() {
-		const cards = localStorage.getItem("cards");
+		const cards = JSON.parse(localStorage.getItem("cards"));
 
-		if (cards) {
+		if (cards && cards.length > 0) {
 			// Create blob
-			const blob = new Blob([cards], { type: "application/json" });
+			const blob = new Blob([JSON.stringify(cards)], {
+				type: "application/json",
+			});
 			const url = URL.createObjectURL(blob);
 
 			// Create a link element
