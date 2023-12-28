@@ -1,14 +1,36 @@
 import Flashcard from "./Flashcard.jsx";
 import { useStore } from "@nanostores/preact";
 import { cards } from "../stores/cardsListStore.js";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import Card from "./Card.jsx";
 
-export default function FlashcardsList({ piledUp = false, toStudy = false }) {
+export default function FlashcardsList({ piledUp = false, toStudy = false, shuffle = false }) {
 	const list = useStore(cards);
 	const [currentList, setCurrentList] = useState(list);
 	const [currentCardIndex, setCurrentCardIndex] = useState(0);
 	const [flipped, setFlipped] = useState(false);
+
+	useEffect(() => {
+		if (shuffle)
+			shuffleList();
+	}, []);
+
+	const shuffleList = (l = null) => {
+		// https://bost.ocks.org/mike/shuffle/
+		// shuffle the list itself or another passed as parameter
+		let list = l ?? [...currentList];
+		let currentIndex = list.length;
+		let randomIndex;
+
+		while (currentIndex > 0) {
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex--;
+
+			[list[currentIndex], list[randomIndex]] = [list[randomIndex], list[currentIndex]];
+		}
+
+		setCurrentList(list);
+	}
 
 	const handleClick = () => {
 		setFlipped(f => !f);
@@ -35,12 +57,12 @@ export default function FlashcardsList({ piledUp = false, toStudy = false }) {
 	};
 
 	const handleContinue = () => {
-		setCurrentList(cl => cl.filter(c => !c.known));
+		shuffleList(currentList.filter(c => !c.known));
 		setCurrentCardIndex(0);
 	};
 
 	const handleRestart = () => {
-		setCurrentList(list);
+		shuffleList(list);
 		setCurrentCardIndex(0);
 	};
 
