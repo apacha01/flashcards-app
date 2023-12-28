@@ -7,16 +7,16 @@ export default function Card({ front, back, type, flipped = false }) {
 		// Find out how to know if child component rendered and highligh only once in parent element. Maybe ref?
 		if ('code'.localeCompare(type) === 0)
 			Prism.highlightAll();
-	}, [])
+	}, [type]);
 
 	return (
-		<article class="grid text-slate-100 my-6 w-4/5 min-w-[300px] min-h-[30rem] h-fit bg-transparent" style={{ perspective: "1000px" }}>
+		<article class="grid text-slate-100 my-6 w-full max-w-[750px] min-h-[30rem] h-fit bg-transparent" style={{ perspective: "1000px" }}>
 			<div
 				class={`w-full h-full border border-slate-50 rounded-xl shadow-lg shadow-black transition-transform duration-[375ms] ${flipped ? '[transform:rotateX(180deg)]' : ''}`}
 				style={{ transformStyle: "preserve-3d" }} // TODO or [transform-style:preserve-3d] in class so it's not inline ?
 			>
 				<div
-					class="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-800 text-center rounded-xl p-2"
+					class="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-800 text-center rounded-xl p-6"
 					style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
 				>
 					<p class="text-4xl [transform:translateZ(100px)]">
@@ -46,7 +46,7 @@ export default function Card({ front, back, type, flipped = false }) {
 									/>
 								)
 								// If code
-								: 'code'.localeCompare(type.split(':')[0]) === 0
+								: 'code'.localeCompare(type?.split(':')[0]) === 0
 									// TODO	
 									// Add other languages, uses C only
 									// type.split(':')[1]

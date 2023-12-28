@@ -3,16 +3,14 @@ import { atom, onMount, onSet } from "nanostores";
 // Store
 export const cards = atom([]);
 
-
 // on Methods
 onMount(cards, () => {
-	cards.set(JSON.parse(localStorage.getItem('cards')) ?? [])
+	cards.set(JSON.parse(localStorage.getItem('cards')) ?? []);
 });
 
 onSet(cards, ({ newValue }) => {
 	localStorage.setItem('cards', JSON.stringify(newValue));
-})
-
+});
 
 // Functions
 export const setCards = (list) => {
