@@ -98,7 +98,7 @@ export default function FlashcardsList({ piledUp = false, toStudy = false, shuff
 												? (
 													<>
 														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToPreviousCard}>
-															<img class="w-7 h-7" src="/back.svg" alt="Back icon" />
+															<img class="w-7 h-7" src="/flashcards-app/back.svg" alt="Back icon" />
 														</button>
 														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-orange-50 bg-orange-800 hover:bg-orange-700 border border-orange-100 transition-colors" onClick={handleSaveCardForNextTryClick}>
 															Save this for next try
