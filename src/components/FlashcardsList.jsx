@@ -4,7 +4,7 @@ import { cards } from "../stores/cardsListStore.js";
 import { useState } from "preact/hooks";
 import Card from "./Card.jsx";
 
-export default function FlashcardsList({ piledUp = false }) {
+export default function FlashcardsList({ piledUp = false, toStudy = false }) {
 	const list = useStore(cards);
 	const [currentList, setCurrentList] = useState(list);
 	const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -22,6 +22,26 @@ export default function FlashcardsList({ piledUp = false }) {
 	const moveToPreviousCard = () => {
 		setFlipped(false);
 		setCurrentCardIndex(i => Math.max(i - 1, 0));
+	};
+
+	const handleKnownCardClick = () => {
+		currentList[currentCardIndex].known = true;
+		moveToNextCard();
+	};
+
+	const handleSaveCardForNextTryClick = () => {
+		currentList[currentCardIndex].known = false;
+		moveToNextCard();
+	};
+
+	const handleContinue = () => {
+		setCurrentList(cl => cl.filter(c => !c.known));
+		setCurrentCardIndex(0);
+	};
+
+	const handleRestart = () => {
+		setCurrentList(list);
+		setCurrentCardIndex(0);
 	};
 
 	return (
@@ -51,15 +71,41 @@ export default function FlashcardsList({ piledUp = false }) {
 										}
 									</ul>
 									<div class="w-full flex justify-center items-center flex-wrap gap-4">
-										<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToPreviousCard}>
-											Previous Card
-										</button>
-										<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={handleClick}>
-											Flip Card
-										</button>
-										<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToNextCard}>
-											Next Card
-										</button>
+										{
+											toStudy
+												? (
+													<>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToPreviousCard}>
+															<img class="w-7 h-7" src="/back.svg" alt="Back icon" />
+														</button>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-orange-50 bg-orange-800 hover:bg-orange-700 border border-orange-100 transition-colors" onClick={handleSaveCardForNextTryClick}>
+															Save this for next try
+														</button>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-green-50 bg-green-800 hover:bg-green-700 border border-green-100 transition-colors" onClick={handleKnownCardClick}>
+															I know this one
+														</button>
+														<button
+															class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors"
+															onClick={handleClick}
+														>
+															Flip Card
+														</button>
+													</>
+												)
+												: (
+													<>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToPreviousCard}>
+															Previous Card
+														</button>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={handleClick}>
+															Flip Card
+														</button>
+														<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={moveToNextCard}>
+															Next Card
+														</button>
+													</>
+												)
+										}
 									</div>
 								</>
 							)
@@ -68,6 +114,16 @@ export default function FlashcardsList({ piledUp = false }) {
 								? (
 									<>
 										<h2 class="text-7xl font-bold text-slate-50 text-center mt-24">Finished</h2>
+										<p class="text-3xl"><strong>Continue</strong> to study only the cards you didn't mark as known.</p>
+										<p class="text-3xl"><strong>Restart</strong> to study with all cards from scratch.</p>
+										<div class="flex gap-4 justify-center">
+											<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={handleContinue}>
+												Continue
+											</button>
+											<button class="rounded-full font-semibold text-lg tracking-wide block py-3 px-6 text-slate-50 bg-slate-800 hover:bg-slate-700 border border-slate-100 transition-colors" onClick={handleRestart}>
+												Restart
+											</button>
+										</div>
 									</>
 								)
 								: (
