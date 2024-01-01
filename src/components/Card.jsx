@@ -31,7 +31,7 @@ export default function Card({ front, back, type, flipped = false }) {
 						// If text use <p> tag
 						'text'.localeCompare(type) === 0
 							? (
-								<pre class="max-h-full overflow-y-auto max-w-prose text-2xl px-10">
+								<pre class="max-h-full overflow-y-auto max-w-prose text-2xl px-10 text-balance">
 									{back}
 								</pre>
 							)
