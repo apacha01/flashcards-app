@@ -31,9 +31,9 @@ export default function Card({ front, back, type, flipped = false }) {
 						// If text use <p> tag
 						'text'.localeCompare(type) === 0
 							? (
-								<p class="max-h-full overflow-y-auto max-w-prose text-2xl px-10">
+								<pre class="max-h-full overflow-y-auto max-w-prose text-2xl px-10">
 									{back}
-								</p>
+								</pre>
 							)
 							// If image
 							: 'image'.localeCompare(type) === 0
